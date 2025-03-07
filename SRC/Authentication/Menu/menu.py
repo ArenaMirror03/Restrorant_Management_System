@@ -111,3 +111,47 @@ def add_menu_item():
 
     print(f"Item '{item_name}' added to {category} successfully!")
 
+def remove_menu_item(menu):
+    """Allow the admin to remove an item from the menu."""
+    print("\nSelect category from which you want to remove an item:")
+    categories = list(menu.keys())
+    
+    # Displaying the available categories
+    count = 1  # Initialize counter
+    for category in categories:
+        print(f"{count}. {category}")
+        count += 1  # Increment counter
+    
+    try:
+        category_choice = int(input("Enter category number: ")) - 1
+        if category_choice not in range(len(categories)):
+            print("Invalid category selection.")
+            return
+        category = categories[category_choice]
+    except ValueError:
+        print("Invalid input. Please enter a number.")
+        return
+
+    if not menu[category]:
+        print(f"No items available in {category} to remove.")
+        return
+
+    print(f"\nItems in {category}:")
+    display_menu(menu)  # Show the current items in the selected category
+
+    try:
+        item_choice = int(input("Enter item number to remove: ")) - 1
+        if item_choice not in range(len(menu[category])):
+            print("Invalid item number.")
+            return
+        item_to_remove = menu[category].pop(item_choice)  # Remove item
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+        return
+
+    # Saving the updated menu back to the JSON file
+    with open("menu.json", "w") as file:
+        json.dump(menu, file, indent=4)
+
+    print(f"Item '{item_to_remove['item_name']}' removed from {category} successfully!")
+
