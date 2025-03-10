@@ -4,7 +4,7 @@ import os
 import logging
 
 
-database_folder = "C:/Users/Expert Solution/Desktop/New folder/SRC/Authentication/Database"
+database_folder = r"C:\Users\dell\Desktop\final\Restrorant_Management_System\SRC\Authentication\Database"
 path = os.getcwd()
 LOG_FOLDER = os.path.join(path,'SRC','Logs','Application_log.txt')
 
@@ -14,7 +14,7 @@ if not os.path.exists(database_folder):
 if not os.path.exists(LOG_FOLDER):
     os.makedirs(LOG_FOLDER)
 
-# Configure logging for signin
+
 log_file = os.path.join(LOG_FOLDER, 'signin.log')
 logging.basicConfig(
     filename=log_file,

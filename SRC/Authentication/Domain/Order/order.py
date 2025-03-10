@@ -4,7 +4,7 @@ import os
 import logging
 from Authentication.Domain.Menu.menu import display_menu  
 
-database_folder = "C:/Users/Expert Solution/Desktop/New folder/SRC/Authentication/Database"
+database_folder = r"C:\Users\dell\Desktop\final\Restrorant_Management_System\SRC\Authentication\Database"
 
 
 if not os.path.exists(database_folder):
@@ -27,37 +27,36 @@ logging.basicConfig(
 
 def place_order(menu):
     """Allow customers to place an order."""
-    orders = []  # Initialize orders as an empty list
+    orders = [] 
     
-    display_menu(menu)  # Display the menu for the user
+    display_menu(menu) 
     
-    order_id = generate_order_id()  # Generate a unique order ID
-    order_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")  # Get the current date and time
-    
+    order_id = generate_order_id()  
+    order_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")      
     while True:
         order_input = input("Enter the items you want to order : ")
-        order_items = order_input.split(",")  # Split order input by commas
+        order_items = order_input.split(",")  
         
         for order_item in order_items:
             item_info = order_item.strip().lower()
             if '*' in item_info:
-                # Process item with quantity
+               
                 item_name, quantity = item_info.split("*")
                 try:
-                    quantity = int(quantity)  # Convert quantity to integer
+                    quantity = int(quantity)  
                 except ValueError:
                     print(f"Invalid quantity for {item_name}. Skipping.")
                     logging.warning(f"Invalid quantity for item: {item_name}. Skipping.")
                     continue
             else:
-                # Default quantity of 1 for items without quantity specified
+               
                 item_name, quantity = item_info, 1
             
-            # Search for the item in the menu
+            
             found = False
-            for category in menu:  # Check all categories dynamically
+            for category in menu:  
                 if category not in menu: 
-                    continue  # Skip invalid categories
+                    continue  
 
                 for item in menu[category]:
                     if item['item_name'].lower() == item_name:
@@ -116,7 +115,7 @@ def place_order(menu):
         if another_order != 'y':
             break
 
-    save_order_to_file(orders)  # Save orders to the file
+    save_order_to_file(orders) 
     return orders
 
 def generate_order_id():
@@ -124,7 +123,7 @@ def generate_order_id():
     date_today = datetime.datetime.now().strftime("%Y-%m-%d")
     filename = os.path.join(database_folder, f"{date_today}_orders.json")
 
-    order_number = 1  # Default starting order number
+    order_number = 1 
     
     try:
         with open(filename, "r") as file:
@@ -134,9 +133,8 @@ def generate_order_id():
                 max_order_number = max(int(order_id.replace("ORD", "")) for order_id in existing_order_ids)
                 order_number = max_order_number + 1
     except FileNotFoundError:
-        pass  # If the file doesn't exist, we start from order number 1
-    
-    order_id = f"ORD{order_number:04d}"  # Format the order ID with leading zeros
+        pass  
+    order_id = f"ORD{order_number:04d}" 
     logging.info(f"Generated order ID: {order_id}")
     return order_id
 
@@ -146,56 +144,25 @@ def save_order_to_file(orders):
     filename = os.path.join(database_folder, f"{date_today}_orders.json")
     
     try:
-        # Read the existing orders from the file (if exists)
+
         try:
             with open(filename, "r") as file:
                 existing_orders = json.load(file)
         except FileNotFoundError:
-            existing_orders = []  # If file doesn't exist, initialize an empty list
-
-        # Update the existing orders list
-        existing_orders.extend(orders)  # Append new orders to the existing list
-
-        # Save the updated list of orders to the file
+            existing_orders = [] 
+       
+        existing_orders.extend(orders)  
+      
         with open(filename, "w") as file:
             json.dump(existing_orders, file, indent=4)
         
         logging.info(f"Saved {len(orders)} order(s) to {filename}.")
         print(f"Order details saved to {filename}.")
         if orders:
-            print(f"Your Order ID is: {orders[0]['order_id']}")  # Display the Order ID after saving
+            print(f"Your Order ID is: {orders[0]['order_id']}") 
     except Exception as e:
         logging.error(f"Error saving order details: {e}")
         print(f"Error saving order details: {e}")
-
-def cancel_order(orders):
-    """Allow the customer to cancel an ongoing order."""
-    if not orders:
-        print("You have not placed any orders yet.")
-        logging.info("No orders to cancel.")
-        return orders
-
-    while True:
-        order_id = input("Enter the Order ID to cancel (or type 'back' to go back): ").strip()
-        
-        if order_id.lower() == 'back':
-            break
-
-        order_found = False
-        for order in orders:
-            if order['order_id'] == order_id:
-                orders.remove(order)  # Remove the order from the in-memory list
-                print(f"Order ID {order_id} has been canceled successfully.")
-                logging.info(f"Order ID {order_id} has been canceled.")
-                order_found = True
-                break
-
-        if order_found:
-            save_order_to_file(orders)  # Save the updated orders list to the file
-            break
-        else:
-            print("Order ID not found. Please try again.")
-            logging.warning(f"Attempt to cancel non-existent Order ID: {order_id}.")
 
 def view_ongoing_orders():
     """View ongoing orders placed by the user."""

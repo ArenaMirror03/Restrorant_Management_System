@@ -2,14 +2,14 @@ import datetime
 import os
 import logging
 
-# Define the path to the Database folder
-database_folder = "C:/Users/Expert Solution/Desktop/New folder/SRC/Authentication/Database"
 
-# Ensure the Database folder exists
+database_folder = r"C:\Users\dell\Desktop\final\Restrorant_Management_System\SRC\Authentication\Database"
+
+
 if not os.path.exists(database_folder):
     os.makedirs(database_folder)
 
-# Configure logging for this module
+
 path = os.getcwd()
 LOG_FOLDER = os.path.join(path,'SRC','Logs','Application_log.txt')
 
@@ -19,7 +19,7 @@ if not os.path.exists(LOG_FOLDER):
 log_file = os.path.join(LOG_FOLDER, 'billing.log')
 logging.basicConfig(
     filename=log_file,
-    level=logging.DEBUG,  # Log everything (DEBUG and above)
+    level=logging.DEBUG,  
     format='%(asctime)s - %(levelname)s - %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
@@ -33,19 +33,19 @@ def generate_bill(orders):
         return
 
     try:
-        # Calculate total, GST, and total amount
+       
         total = sum(order['price'] * order['quantity'] for order in orders)
         gst = total * 0.18  # 18% GST
         total_amount = total + gst
 
-        # Get current date and time
+        
         current_date = datetime.datetime.now().strftime("%Y-%m-%d")
         current_time = datetime.datetime.now().strftime("%H:%M:%S")
 
-        # Define the path and filename to store the bill in the Database folder
+        
         bill_file = os.path.join(database_folder, f"{current_date}_bill.txt")
 
-        # Write the bill data to the text file in the Database folder
+        
         with open(bill_file, 'a') as file:
             file.write("\n--- Bill ---\n")
             for order in orders:
@@ -57,7 +57,7 @@ def generate_bill(orders):
             file.write(f"Time of Billing: {current_time}\n")
             file.write(f"\n--- End of Bill ---\n")
 
-        # Print the bill on the screen
+    
         print("\n--- Bill ---")
         for order in orders:
             print(f"{order['item_name']} x{order['quantity']} - {order['price'] * order['quantity']:.2f}")

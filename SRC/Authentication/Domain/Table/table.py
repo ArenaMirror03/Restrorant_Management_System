@@ -7,7 +7,7 @@ from itertools import combinations
 TOTAL_TABLES = 15
 OPERATING_HOURS = (10, 22)
 
-
+# Folder and file paths
 DATABASE_FOLDER = os.path.join(os.path.dirname(__file__), '..', '..', 'database')
 if not os.path.exists(DATABASE_FOLDER):
     os.makedirs(DATABASE_FOLDER)
@@ -27,11 +27,11 @@ logging.basicConfig(
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 
-# Initialize tables with seating capacity
+
 def initialize_tables():
     return {str(i): {"seats": 1 if i <= 3 else 2 if i <= 7 else 4, "bookings": {}} for i in range(1, TOTAL_TABLES + 1)}
 
-# Load data from file
+
 def load_data():
     if os.path.exists(DATA_FILE):
         try:
@@ -43,12 +43,12 @@ def load_data():
             return {"tables": initialize_tables()}
     return {"tables": initialize_tables()}
 
-# Save data to file
+
 def save_data(data):
     with open(DATA_FILE, "w") as f:
         json.dump(data, f, indent=4)
 
-# Auto-release past bookings
+
 def auto_release_tables(data):
     today = datetime.datetime.now().date()
     for table in data["tables"].values():
@@ -58,25 +58,36 @@ def auto_release_tables(data):
     save_data(data)
     logging.info(f"Auto-released past bookings as of {today}.")
 
-# Display table status
+
 def display_tables(data):
     print("\n📌 *TABLE STATUS* 📌\n-------------------------")
-    today = datetime.datetime.now().date()  # Get today's date
+    today = datetime.datetime.now().date() 
     for table_id, table in data["tables"].items():
+       
         booked_dates = [date for date in table["bookings"] if datetime.datetime.strptime(date, '%Y-%m-%d').date() >= today]
 
+       
         if booked_dates:
             status = "Booked"
         else:
             status = "Available"
+     
+        current_date_booked = any(
+            datetime.datetime.strptime(date, '%Y-%m-%d').date() == today for date in table["bookings"]
+        )
+        
+       
+        if current_date_booked:
+            status = "Booked"  
+        
         print(f"Table {table_id} ({table['seats']} seats): {status}")
     print("\n")
 
-# Check available tables
+
 def check_availability(data, date, time):
     return [table_id for table_id, table in data["tables"].items() if date not in table["bookings"] or time not in table["bookings"][date]]
 
-# Find the best table combination for the given people count
+
 def find_best_table_combination(data, people_count, available_tables):
     table_seats = {table_id: data["tables"][table_id]["seats"] for table_id in available_tables}
     for size in range(1, len(available_tables) + 1):
@@ -85,7 +96,7 @@ def find_best_table_combination(data, people_count, available_tables):
                 return combo
     return None
 
-# Validate integer input
+
 def get_valid_input(prompt, min_val, max_val):
     while True:
         try:
@@ -101,23 +112,23 @@ def get_valid_input(prompt, min_val, max_val):
 
 # Book a table
 def book_tables():
-    data = load_data()  # Load data at the beginning of the function
+    data = load_data()  
     today = datetime.datetime.now().date()
     current_month = today.month
 
-    # Get the number of people for the booking
+  
     people_count = get_valid_input("Enter number of people (1 to 43): ", 1, 43)
 
     while True:
-        # Get the booking date and validate it
+        
         date, day = get_valid_date("Enter date (YYYY-MM-DD, or 'cancel' to go back): ")
         if date is None:
             return
 
-        # Convert the input date to a datetime object
+       
         booking_date = datetime.datetime.strptime(date, "%Y-%m-%d").date()
 
-        # Check if the booking date is within the current month
+   
         if booking_date.month != current_month:
             print(f"❌ You can only book tables for the current month ({today.strftime('%B %Y')}).")
             logging.warning(f"Attempted booking for a date outside the current month: {date}")
@@ -127,44 +138,43 @@ def book_tables():
         if time is None:
             return
 
-        # Check if there are available tables
+   
         available_tables = check_availability(data, date, time)
         if not available_tables:
             print("❌ No tables available at this time! Try another time.")
             logging.warning(f"No tables available at {time} on {date}.")
             continue
 
-        # Find the best combination of tables for the given people count
+       
         best_combo = find_best_table_combination(data, people_count, available_tables)
         if not best_combo:
             print("❌ No suitable tables found! Try another time.")
             logging.warning(f"No suitable tables found for {people_count} people.")
             continue
 
-        # Confirm booking with the user
+       
         choice = input(f"Do you want to book Table {', '.join(best_combo)} on {day}? (yes/no/cancel): ").strip().lower()
         if choice == "cancel":
             return
         if choice != "yes":
             continue
 
-        # Get the duration for the booking
+        
         duration = get_valid_input("For how many hours? (1 to 12): ", 1, 12)
         end_time = (datetime.datetime.strptime(f"{date} {time}", '%Y-%m-%d %H:%M') + datetime.timedelta(hours=duration)).strftime('%H:%M')
 
-        # Make the booking for the selected tables
         for table in best_combo:
             data["tables"][table]["bookings"].setdefault(date, {})[time] = {"duration": duration, "end_time": end_time, "day": day}
 
-        # Save the data after booking
+      
         save_data(data)
         print(f"✅ Table {', '.join(best_combo)} booked on {day} ({date}) from {time} for {duration} hours!")
         logging.info(f"Table {', '.join(best_combo)} booked on {day} ({date}) from {time} for {duration} hours!")
         return
 
-# Release a table
+
 def release_table():
-    data = load_data()  # Load data at the beginning of the function
+    data = load_data()  
     table_number = get_valid_input("Enter table number to release (1-15, or 'cancel' to go back): ", 1, TOTAL_TABLES)
     if table_number is None:
         return
@@ -179,9 +189,9 @@ def release_table():
     else:
         print(f"⚠ Table {table_number} has no bookings!")
 
-# Cancel a specific booking
+
 def cancel_booking():
-    data = load_data()  # Load data at the beginning of the function
+    data = load_data()  
     table_number = get_valid_input("Enter table number to cancel booking (1-15, or 'cancel' to go back): ", 1, TOTAL_TABLES)
     if table_number is None:
         return
@@ -213,7 +223,7 @@ def cancel_booking():
     print(f"✅ Booking for Table {table_number} on {date} at {time} has been cancelled!")
     logging.info(f"Booking for Table {table_number} on {date} at {time} cancelled.")
 
-# Validate date input
+
 def get_valid_date(prompt):
     while True:
         try:
@@ -227,7 +237,7 @@ def get_valid_date(prompt):
         except ValueError:
             print("❌ Invalid format! Use YYYY-MM-DD.")
 
-# Validate time input
+
 def get_valid_time(prompt):
     while True:
         try:
