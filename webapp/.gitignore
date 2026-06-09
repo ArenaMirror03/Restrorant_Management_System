@@ -1,0 +1,14 @@
+# Don't commit local data files except defaults
+database/*.json
+!database/admin_data.json
+!database/menu.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
