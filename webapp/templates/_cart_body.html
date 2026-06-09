@@ -1,0 +1,23 @@
+{% macro cart_panel(list_id) %}
+<div class="p-3 flex-grow-1 overflow-auto">
+  <div class="text-center text-muted py-3 empty-cart-{{ list_id }}">
+    <i class="bi bi-cart-x fs-3 d-block mb-1"></i>
+    <small>Cart is empty</small>
+  </div>
+  <ul class="list-group list-group-flush" id="{{ list_id }}"></ul>
+</div>
+<div class="p-3 border-top">
+  <div class="d-flex justify-content-between small text-muted mb-1">
+    <span>Subtotal</span><span class="cartSubtotal">₹0</span>
+  </div>
+  <div class="d-flex justify-content-between small text-muted mb-2">
+    <span>GST 18%</span><span class="cartGst">₹0</span>
+  </div>
+  <div class="d-flex justify-content-between fw-bold mb-3">
+    <span>Total</span><span class="text-success cartTotal">₹0</span>
+  </div>
+  <button class="btn btn-success w-100 rounded-pill fw-semibold placeBtn" disabled onclick="placeOrder()">
+    <i class="bi bi-check-circle me-2"></i>Place Order
+  </button>
+</div>
+{% endmacro %}

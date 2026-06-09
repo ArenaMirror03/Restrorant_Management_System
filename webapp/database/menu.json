@@ -1,0 +1,177 @@
+{
+    "Breakfast": [
+        {
+            "item_name": "oats",
+            "item_price": 20.0
+        },
+        {
+            "item_name": "Aalu-Kachori",
+            "item_price": 40.0
+        },
+        {
+            "item_name": "Chole Bhature",
+            "half_plate_price": 30.0,
+            "full_plate_price": 50.0
+        },
+        {
+            "item_name": "Aalu-Prantha",
+            "item_price": 40.0
+        },
+        {
+            "item_name": "Paneer-Prantha",
+            "item_price": 50.0
+        },
+        {
+            "item_name": "Muli-Prantha",
+            "item_price": 30.0
+        },
+        {
+            "item_name": "Mix-Prantha",
+            "item_price": 60.0
+        },
+        {
+            "item_name": "Poha",
+            "half_plate_price": 60.0,
+            "full_plate_price": 100.0
+        },
+        {
+            "item_name": "Curd",
+            "item_price": 30.0
+        }
+    ],
+    "Lunch": [
+        {
+            "item_name": "Dal-Fry",
+            "half_plate_price": 40.0,
+            "full_plate_price": 80.0
+        },
+        {
+            "item_name": "Kadhi-Rice",
+            "half_plate_price": 100.0,
+            "full_plate_price": 120.0
+        },
+        {
+            "item_name": "Chole-Rice",
+            "half_plate_price": 100.0,
+            "full_plate_price": 120.0
+        },
+        {
+            "item_name": "Masala-Chole",
+            "half_plate_price": 80.0,
+            "full_plate_price": 100.0
+        },
+        {
+            "item_name": "Tadka-Rice",
+            "half_plate_price": 85.0,
+            "full_plate_price": 100.0
+        },
+        {
+            "item_name": "Tava-Roti",
+            "item_price": 8.0
+        },
+        {
+            "item_name": "Butter-Tava-Roti",
+            "item_price": 12.0
+        },
+        {
+            "item_name": "Tandoori-Roti",
+            "item_price": 15.0
+        },
+        {
+            "item_name": "Butter-Tandoori-Roti",
+            "item_price": 18.0
+        },
+        {
+            "item_name": "Naan",
+            "item_price": 15.0
+        },
+        {
+            "item_name": "Chur-Chur Naan",
+            "item_price": 20.0
+        }
+    ],
+    "Dinner": [
+        {
+            "item_name": "Kadhai-Paneer",
+            "half_plate_price": 180.0,
+            "full_plate_price": 220.0
+        },
+        {
+            "item_name": "Shahi-Paneer",
+            "half_plate_price": 140.0,
+            "full_plate_price": 200.0
+        },
+        {
+            "item_name": "Dal-Makhani",
+            "half_plate_price": 180.0,
+            "full_plate_price": 240.0
+        },
+        {
+            "item_name": "Masala-Bhidi",
+            "half_plate_price": 150.0,
+            "full_plate_price": 180.0
+        },
+        {
+            "item_name": "Tava-Roti",
+            "item_price": 8.0
+        },
+        {
+            "item_name": "Butter-Tava-Roti",
+            "item_price": 12.0
+        },
+        {
+            "item_name": "Tandoori-Roti",
+            "item_price": 15.0
+        },
+        {
+            "item_name": "Butter-Tandoori-Roti",
+            "item_price": 18.0
+        },
+        {
+            "item_name": "Naan",
+            "item_price": 15.0
+        },
+        {
+            "item_name": "Chur-Chur Naan",
+            "item_price": 20.0
+        },
+        {
+            "item_name": "Jeera-Rice",
+            "item_price": 130.0
+        }
+    ],
+    "Beverages": [
+        {
+            "item_name": "Lassi",
+            "item_price": 20.0
+        },
+        {
+            "item_name": "Masala-Lassi",
+            "item_price": 25.0
+        },
+        {
+            "item_name": "Choco-Milk Shake",
+            "item_price": 50.0
+        },
+        {
+            "item_name": "Kit-Kat Shake",
+            "item_price": 60.0
+        },
+        {
+            "item_name": "Oreo-Shake",
+            "item_price": 70.0
+        },
+        {
+            "item_name": "Chiku-Shake",
+            "item_price": 80.0
+        },
+        {
+            "item_name": "Pepsi",
+            "item_price": 40.0
+        },
+        {
+            "item_name": "Mixed Fruit Juice",
+            "item_price": 100.0
+        }
+    ]
+}

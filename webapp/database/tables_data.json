@@ -1,0 +1,141 @@
+{
+    "tables": {
+        "1": {
+            "seats": 1,
+            "bookings": {
+                "2026-06-11": {
+                    "15:00": {
+                        "duration": 4,
+                        "end_time": "19:00",
+                        "day": "Thursday",
+                        "customer": "sumit"
+                    }
+                }
+            }
+        },
+        "2": {
+            "seats": 1,
+            "bookings": {}
+        },
+        "3": {
+            "seats": 1,
+            "bookings": {}
+        },
+        "4": {
+            "seats": 2,
+            "bookings": {}
+        },
+        "5": {
+            "seats": 2,
+            "bookings": {}
+        },
+        "6": {
+            "seats": 2,
+            "bookings": {}
+        },
+        "7": {
+            "seats": 2,
+            "bookings": {}
+        },
+        "8": {
+            "seats": 4,
+            "bookings": {
+                "2026-06-11": {
+                    "15:00": {
+                        "duration": 4,
+                        "end_time": "19:00",
+                        "day": "Thursday",
+                        "customer": "sumit"
+                    }
+                },
+                "2026-06-10": {
+                    "02:00": {
+                        "duration": 3,
+                        "end_time": "05:00",
+                        "day": "Wednesday",
+                        "customer": "sumit"
+                    }
+                }
+            }
+        },
+        "9": {
+            "seats": 4,
+            "bookings": {
+                "2026-06-11": {
+                    "15:00": {
+                        "duration": 4,
+                        "end_time": "19:00",
+                        "day": "Thursday",
+                        "customer": "sumit"
+                    }
+                },
+                "2026-06-10": {
+                    "02:00": {
+                        "duration": 3,
+                        "end_time": "05:00",
+                        "day": "Wednesday",
+                        "customer": "sumit"
+                    }
+                }
+            }
+        },
+        "10": {
+            "seats": 4,
+            "bookings": {
+                "2026-06-11": {
+                    "15:00": {
+                        "duration": 4,
+                        "end_time": "19:00",
+                        "day": "Thursday",
+                        "customer": "sumit"
+                    }
+                },
+                "2026-06-10": {
+                    "02:00": {
+                        "duration": 3,
+                        "end_time": "05:00",
+                        "day": "Wednesday",
+                        "customer": "sumit"
+                    }
+                }
+            }
+        },
+        "11": {
+            "seats": 4,
+            "bookings": {
+                "2026-06-11": {
+                    "15:00": {
+                        "duration": 4,
+                        "end_time": "19:00",
+                        "day": "Thursday",
+                        "customer": "sumit"
+                    }
+                },
+                "2026-06-10": {
+                    "02:00": {
+                        "duration": 3,
+                        "end_time": "05:00",
+                        "day": "Wednesday",
+                        "customer": "sumit"
+                    }
+                }
+            }
+        },
+        "12": {
+            "seats": 4,
+            "bookings": {}
+        },
+        "13": {
+            "seats": 4,
+            "bookings": {}
+        },
+        "14": {
+            "seats": 4,
+            "bookings": {}
+        },
+        "15": {
+            "seats": 4,
+            "bookings": {}
+        }
+    }
+}

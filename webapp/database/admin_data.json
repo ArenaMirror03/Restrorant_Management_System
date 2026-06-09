@@ -1,0 +1,16 @@
+{
+    "VS001": {
+        "admin_id": "VS001",
+        "name": "Admin",
+        "age": "30",
+        "worktype": "Manager",
+        "password": "admin@123"
+    },
+    "VS691": {
+        "admin_id": "VS691",
+        "name": "Sumit",
+        "age": "22",
+        "worktype": "Owner",
+        "password": "124001"
+    }
+}

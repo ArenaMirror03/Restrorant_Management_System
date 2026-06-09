@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+
+<!-- Hero -->
+<section class="hero-section d-flex align-items-center justify-content-center text-white text-center">
+  <div class="hero-overlay"></div>
+  <div class="hero-content px-3">
+    <p class="hero-sub text-warning fw-semibold mb-2">WELCOME TO</p>
+    <h1 class="hero-title font-playfair fw-bold mb-3">Sharma Kitchen's</h1>
+    <p class="hero-lead mb-4 opacity-75">Authentic flavours, modern experience.<br class="d-none d-sm-block"> Reserve, order & enjoy.</p>
+    <div class="d-flex gap-2 justify-content-center flex-wrap">
+      <a href="{{ url_for('login') }}" class="btn btn-warning btn-lg rounded-pill fw-semibold px-4 shadow">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+      </a>
+      <a href="{{ url_for('signup') }}" class="btn btn-outline-light btn-lg rounded-pill fw-semibold px-4">
+        <i class="bi bi-person-plus me-2"></i>Register
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section class="py-5 bg-white">
+  <div class="container px-3">
+    <h2 class="text-center font-playfair fw-bold mb-4 section-title">Everything You Need</h2>
+    <div class="row g-3">
+      {% for icon, title, desc in [
+        ('bi-book-half','Digital Menu','Browse full menu by category with live prices.'),
+        ('bi-cart3','Easy Ordering','Place orders with half/full plate options.'),
+        ('bi-grid-3x3','Table Booking','Check availability and book instantly.'),
+        ('bi-receipt','Smart Billing','Auto bills with GST and print support.'),
+        ('bi-shield-lock','Admin Panel','Manage menu, orders and tables securely.'),
+        ('bi-graph-up-arrow','Live Dashboard','Real-time stats on orders and tables.')
+      ] %}
+      <div class="col-6 col-md-4">
+        <div class="feature-card card border-0 shadow-sm h-100 text-center p-3 hover-lift">
+          <div class="feature-icon mx-auto mb-2">
+            <i class="bi {{ icon }}"></i>
+          </div>
+          <h6 class="fw-bold mb-1">{{ title }}</h6>
+          <p class="text-muted small mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-banner py-4 text-white text-center">
+  <div class="container px-3">
+    <div class="row g-3">
+      {% for val, label in [('15','Tables'),('50+','Menu Items'),('18%','GST Incl.'),('24/7','Support')] %}
+      <div class="col-6 col-md-3">
+        <h3 class="fw-bold text-warning mb-0">{{ val }}</h3>
+        <small class="opacity-75">{{ label }}</small>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="page-header py-3 px-3">
+  <div class="container-fluid">
+    <h5 class="font-playfair fw-bold text-white mb-0">
+      <i class="bi bi-speedometer2 text-warning me-2"></i>Dashboard
+    </h5>
+    <small class="text-white-50">Welcome, {{ session.user }}!</small>
+  </div>
+</div>
+
+<div class="container-fluid px-3 py-3">
+
+  <!-- Stat Cards — 2 cols on mobile, 4 on desktop -->
+  <div class="row g-3 mb-4">
+    {% for icon, color, val, label, link in [
+      ('cart3','warning', orders|length, "Today's Orders", url_for('view_orders')),
+      ('grid-3x3','success', available, 'Tables Free', url_for('tables')),
+      ('x-circle','danger', booked, 'Tables Booked', url_for('tables')),
+      ('book-half','info', total_items, 'Menu Items', url_for('menu'))
+    ] %}
+    <div class="col-6 col-md-3">
+      <a href="{{ link }}" class="text-decoration-none">
+        <div class="stat-card card border-0 shadow-sm h-100 hover-lift">
+          <div class="card-body d-flex align-items-center gap-3 p-3">
+            <div class="stat-icon bg-{{ color }} bg-opacity-10 text-{{ color }}">
+              <i class="bi bi-{{ icon }}"></i>
+            </div>
+            <div class="min-w-0">
+              <div class="fw-bold fs-5 text-{{ color }}">{{ val }}</div>
+              <div class="text-muted small text-truncate">{{ label }}</div>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Quick Actions — 2 cols on mobile, 4 on md -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-header bg-transparent border-0 pt-3 pb-0 px-3">
+      <span class="fw-semibold small"><i class="bi bi-lightning-charge text-warning me-1"></i>Quick Actions</span>
+    </div>
+    <div class="card-body p-3">
+      <div class="row g-2">
+        {% for icon, label, link, color in [
+          ('book-half','Menu', url_for('menu'), 'primary'),
+          ('cart-plus','Order', url_for('order'), 'success'),
+          ('calendar-plus','Tables', url_for('tables'), 'warning'),
+          ('receipt','Bills', url_for('view_orders'), 'info')
+        ] %}
+        <div class="col-6 col-md-3">
+          <a href="{{ link }}" class="btn btn-{{ color }} w-100 d-flex flex-column align-items-center py-3 gap-1 rounded-3">
+            <i class="bi bi-{{ icon }} fs-5"></i>
+            <small class="fw-medium">{{ label }}</small>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Orders -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-transparent border-0 pt-3 pb-0 px-3 d-flex justify-content-between align-items-center">
+      <span class="fw-semibold small"><i class="bi bi-clock-history text-warning me-1"></i>Recent Orders</span>
+      <a href="{{ url_for('view_orders') }}" class="btn btn-sm btn-outline-warning rounded-pill px-3" style="font-size:.75rem">View All</a>
+    </div>
+    <div class="card-body p-0">
+      {% if orders %}
+      <div class="list-group list-group-flush">
+        {% for o in orders[-6:]|reverse %}
+        <div class="list-group-item px-3 py-2 d-flex justify-content-between align-items-center">
+          <div class="min-w-0">
+            <div class="fw-medium small text-truncate">{{ o.item_name }}</div>
+            <small class="text-muted">{{ o.order_id }}</small>
+          </div>
+          <span class="badge bg-success ms-2 flex-shrink-0">₹{{ "%.0f"|format(o.price * o.quantity) }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-center text-muted py-4">
+        <i class="bi bi-inbox fs-3 d-block mb-1"></i>
+        <small>No orders today</small><br>
+        <a href="{{ url_for('order') }}" class="btn btn-sm btn-warning rounded-pill mt-2 px-3">Place Order</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if session.role == 'admin' %}
+  <div class="alert alert-warning border-0 rounded-3 d-flex align-items-start gap-2 mt-3 mb-0">
+    <i class="bi bi-shield-lock-fill mt-1 flex-shrink-0"></i>
+    <small><strong>Admin Mode</strong> — Manage menu, bookings and orders.</small>
+  </div>
+  {% endif %}
+
+</div>
+
+<!-- Mobile bottom padding so content isn't hidden by bottom nav -->
+<div class="pb-mobile"></div>
+{% endblock %}
