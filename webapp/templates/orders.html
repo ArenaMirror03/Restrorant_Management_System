@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Orders{% endblock %}
+{% block content %}
+
+<div class="page-header py-3 px-3">
+  <div class="container-fluid">
+    <h5 class="font-playfair fw-bold text-white mb-0"><i class="bi bi-receipt text-warning me-2"></i>Today's Orders</h5>
+    <small class="text-white-50">{{ orders|length }} item(s) ordered today</small>
+  </div>
+</div>
+
+<div class="container-fluid px-3 py-3">
+  {% if orders %}
+  {% set grouped = {} %}
+  {% for o in orders %}
+    {% if o.order_id not in grouped %}{% set _ = grouped.update({o.order_id: []}) %}{% endif %}
+    {% set _ = grouped[o.order_id].append(o) %}
+  {% endfor %}
+
+  <div class="row g-3">
+    {% for oid, items in grouped.items() %}
+    {% set total = namespace(val=0) %}
+    {% for i in items %}{% set total.val = total.val + i.price * i.quantity %}{% endfor %}
+    <div class="col-12 col-sm-6 col-xl-4">
+      <div class="card border-0 shadow-sm hover-lift h-100">
+        <div class="card-header bg-transparent border-0 pt-3 px-3 d-flex justify-content-between align-items-center">
+          <span class="badge bg-warning text-dark rounded-pill px-3">{{ oid }}</span>
+          <small class="text-muted">{{ items[0].order_time[-8:] }}</small>
+        </div>
+        <div class="card-body px-3 pt-2 pb-2">
+          {% for item in items %}
+          <div class="d-flex justify-content-between small py-1 border-bottom">
+            <span class="text-truncate me-2">{{ item.item_name }} × {{ item.quantity }}</span>
+            <span class="text-success fw-medium flex-shrink-0">₹{{ "%.0f"|format(item.price * item.quantity) }}</span>
+          </div>
+          {% endfor %}
+          <div class="d-flex justify-content-between fw-bold mt-2 small">
+            <span>Total + GST</span>
+            <span class="text-warning">₹{{ "%.0f"|format(total.val * 1.18) }}</span>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent border-0 px-3 pb-3">
+          <a href="{{ url_for('bill', order_id=oid) }}" class="btn btn-warning btn-sm rounded-pill w-100 fw-semibold">
+            <i class="bi bi-receipt me-1"></i>View Bill
+          </a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% else %}
+  <div class="text-center py-5 text-muted">
+    <i class="bi bi-inbox fs-1 d-block mb-3"></i>
+    <h6>No orders yet today</h6>
+    <a href="{{ url_for('order') }}" class="btn btn-warning rounded-pill px-4 mt-2 btn-sm">Place First Order</a>
+  </div>
+  {% endif %}
+</div>
+
+<div class="pb-mobile"></div>
+{% endblock %}

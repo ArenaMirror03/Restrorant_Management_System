@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="auth-page d-flex align-items-center justify-content-center min-vh-100 px-3 py-4">
+  <div class="w-100" style="max-width:420px">
+    <div class="card auth-card shadow-lg border-0">
+      <div class="card-body p-4">
+        <div class="text-center mb-4">
+          <div class="auth-logo mb-2 mx-auto"><i class="bi bi-fire text-warning fs-2"></i></div>
+          <h4 class="font-playfair fw-bold mb-0">Sharma Kitchen's</h4>
+          <small class="text-muted">Sign in to continue</small>
+        </div>
+
+        <ul class="nav nav-pills nav-fill mb-4 role-tabs" id="loginTabs">
+          <li class="nav-item">
+            <button class="nav-link active" onclick="setRole('customer', this)">
+              <i class="bi bi-person me-1"></i>Customer
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" onclick="setRole('admin', this)">
+              <i class="bi bi-shield-lock me-1"></i>Admin
+            </button>
+          </li>
+        </ul>
+
+        <form method="POST">
+          <input type="hidden" name="role" id="roleInput" value="customer">
+
+          <div id="customerFields">
+            <div class="mb-3">
+              <label class="form-label fw-medium small">Your Name</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person text-muted"></i></span>
+                <input type="text" name="name" class="form-control border-start-0" placeholder="Enter your name">
+              </div>
+            </div>
+          </div>
+
+          <div id="adminFields" style="display:none">
+            <div class="mb-3">
+              <label class="form-label fw-medium small">Admin ID</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-person-badge text-muted"></i></span>
+                <input type="text" name="admin_id" class="form-control border-start-0" placeholder="e.g. VS123">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-medium small">Password</label>
+              <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-lock text-muted"></i></span>
+                <input type="password" name="password" class="form-control border-start-0" placeholder="••••••••">
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-warning w-100 fw-semibold py-2 rounded-pill">
+            <i class="bi bi-box-arrow-in-right me-2"></i>Login
+          </button>
+        </form>
+
+        <div class="text-center mt-3">
+          <small class="text-muted">Admin? <a href="{{ url_for('signup') }}" class="text-warning fw-semibold">Register here</a></small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function setRole(role, btn) {
+  document.getElementById('roleInput').value = role;
+  document.querySelectorAll('#loginTabs .nav-link').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('customerFields').style.display = role === 'customer' ? '' : 'none';
+  document.getElementById('adminFields').style.display = role === 'admin' ? '' : 'none';
+}
+</script>
+{% endblock %}

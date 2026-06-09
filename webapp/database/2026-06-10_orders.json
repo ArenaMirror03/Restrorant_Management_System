@@ -1,0 +1,42 @@
+[
+    {
+        "item_name": "Aalu-Kachori",
+        "price": 40,
+        "quantity": 1,
+        "order_id": "ORD0001",
+        "order_time": "2026-06-10 01:14:40",
+        "customer": "sumit"
+    },
+    {
+        "item_name": "oats",
+        "price": 20,
+        "quantity": 1,
+        "order_id": "ORD0001",
+        "order_time": "2026-06-10 01:14:40",
+        "customer": "sumit"
+    },
+    {
+        "item_name": "Chole Bhature (Full)",
+        "price": 50,
+        "quantity": 1,
+        "order_id": "ORD0001",
+        "order_time": "2026-06-10 01:14:40",
+        "customer": "sumit"
+    },
+    {
+        "item_name": "oats",
+        "price": 20,
+        "quantity": 1,
+        "order_id": "ORD0004",
+        "order_time": "2026-06-10 01:19:14",
+        "customer": "Admin"
+    },
+    {
+        "item_name": "Aalu-Kachori",
+        "price": 40,
+        "quantity": 1,
+        "order_id": "ORD0004",
+        "order_time": "2026-06-10 01:19:14",
+        "customer": "Admin"
+    }
+]
