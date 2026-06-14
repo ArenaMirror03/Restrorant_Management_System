@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: spice-garden
+    name: Sharma-Kitchen's
     runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    buildCommand: pip install -r webapp/requirements.txt
+    startCommand: gunicorn --chdir webapp --bind 0.0.0.0:$PORT app:app
     envVars:
       - key: FLASK_ENV
         value: production
